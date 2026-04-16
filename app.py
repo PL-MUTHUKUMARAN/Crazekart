@@ -25,7 +25,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 migrate = Migrate(app, db) 
-# ... rest of your code stays exactly the same
+
 
 with app.app_context():
     db.create_all()
@@ -79,6 +79,8 @@ def register():
 
         password = generate_password_hash(request.form.get('password'))
 
+        is_admin = True if email == "admin03@gmail.com" else False
+
         new_user = User(username=username, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
@@ -94,6 +96,8 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
+
+        
 
         user = User.query.filter(User.email == email).first()
 
