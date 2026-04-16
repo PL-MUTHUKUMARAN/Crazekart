@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delivery Address</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: #f7f8fc;
+      }
+
+      .container {
+        padding: 5px;
+        max-width: 420px;
+        margin: 40px auto;
+      }
+
+      .steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        position: relative;
+      }
+
+      .s1::before,
+      .s2::before {
+        content: "";
+        position: absolute;
+        top: 14px;
+        right: -42px;
+        width: 60%;
+        height: 2px;
+        background: #ddd;
+        z-index: 0;
+      }
+
+      .step {
+        text-align: center;
+        flex: 1;
+        position: relative;
+        z-index: 1;
+        font-size: 13px;
+        color: #999;
+      }
+
+      .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #fff;
+        border: 2px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .circle.active {
+        border-color: #ff6a00;
+        color: #ff6a00;
+        box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.1);
+      }
+
+      .step.active {
+        color: #ff6a00;
+        font-weight: 500;
+      }
+
+      .address {
+        background: #fff;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border-top: 5px solid #ff6a00;
+        animation: fadeIn 0.4s ease;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #ff6a00;
+        font-weight: 600;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        color: #444;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .req {
+        color: red;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px 14px;
+        margin-bottom: 18px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        outline: none;
+        transition: 0.25s ease;
+        font-size: 14px;
+        background: #fafafa;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #ff6a00;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.1);
+      }
+
+      .submit {
+        width: 100%;
+        padding: 13px;
+        background: linear-gradient(135deg, #ff8c00, #ff5e3a);
+        border: none;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 500;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.25s ease;
+      }
+
+      .submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 94, 58, 0.3);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 500px) {
+        .address {
+          padding: 22px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <section class="steps">
+        <div class="step active s1">
+          <div class="circle active">1</div>
+          Address
+        </div>
+        <div class="step s2">
+          <div class="circle">2</div>
+          Summary
+        </div>
+        <div class="step s3">
+          <div class="circle">3</div>
+          Payment
+        </div>
+      </section>
+
+      <section class="address">
+        <h1>Delivery Address</h1>
+
+        <form action="/save_delivery_details" method="POST">
+          <label>Full Name <span class="req">*</span></label>
+          <input
+            type="text"
+            name="user_name"
+            placeholder="Your full name"
+            value="{{ current_user.name if current_user.is_authenticated else '' }}"
+            required
+          />
+
+          <label>Phone Number <span class="req">*</span></label>
+          <input
+            type="tel"
+            name="phoneNumber"
+            placeholder="10-digit number"
+            required
+          />
+
+          <label>Email <span class="req">*</span></label>
+          <input
+            type="email"
+            name="email"
+            placeholder="you@email.com"
+            value="{{ current_user.email if current_user.is_authenticated else '' }}"
+            required
+          />
+
+          <label>Pincode <span class="req">*</span></label>
+          <input
+            type="text"
+            name="pincode"
+            maxlength="6"
+            placeholder="123456"
+            required
+          />
+
+          <label>Address <span class="req">*</span></label>
+          <textarea
+            rows="3"
+            name="user_address"
+            placeholder="House no., street, city..."
+            required
+          ></textarea>
+
+          <input type="hidden" name="product_name" id="product_name" />
+          <button type="submit" class="submit">Save Address</button>
+        </form>
+      </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

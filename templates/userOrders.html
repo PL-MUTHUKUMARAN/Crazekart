@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}My Orders{% endblock %}
+{% block content %}
+
+<style>
+  body {
+    margin-top: 80px;
+    font-family: "Poppins", sans-serif;
+    background: #f5f6fa;
+  }
+
+  .order-page {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 10px;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+  }
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .item-image img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .item-info {
+    flex: 2;
+  }
+
+  .item-info h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+
+  .item-info p {
+    margin: 4px 0;
+    color: #666;
+    font-size: 14px;
+  }
+
+  .order-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 14px;
+    border-left: 1px solid #eee;
+    padding-left: 15px;
+  }
+
+  .info-row {
+    display: grid;
+    grid-template-columns: 95px auto;
+    width: 100%;
+    max-width: 260px;
+    margin-bottom: 6px;
+  }
+
+  .label {
+    font-weight: 600;
+  }
+
+  .value {
+    text-align: left;
+  }
+
+  .status-paid {
+    color: green;
+    font-weight: 600;
+  }
+
+  .status-failed {
+    color: red;
+    font-weight: 600;
+  }
+
+  .status-pending {
+    color: orange;
+    font-weight: 600;
+  }
+
+  .empty {
+    text-align: center;
+    margin-top: 40px;
+    color: #888;
+  }
+
+  .categories-icon-container {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .order-item {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .order-info {
+      align-items: center;
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+</style>
+
+<div class="order-page">
+  <div class="page-title">🛒 My Orders</div>
+
+  {% if items %}
+  <div class="order-items">
+    {% for item in items %}
+    <div class="order-item">
+      <div class="item-image">
+        <img
+          src="{{ url_for('static', filename='assets/products/' + item.image + '.webp') }}"
+          alt="{{ item.product_name }}"
+        />
+      </div>
+
+      <div class="item-info">
+        <h3 class="product-title">{{ item.product_name }}</h3>
+        <p>Color: {{ item.color }}</p>
+        <p>Price: ₹ {{ item.price }}</p>
+        <p>Total: ₹ {{ item.price * item.quantity }}</p>
+      </div>
+
+      <div class="order-info">
+        <div class="info-row">
+          <span class="label">Order ID :</span>
+          <span class="value">{{ item.order_id }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Order Date :</span>
+          <span class="value">{{ item.order_date.strftime('%Y-%m-%d') }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Payment Status :</span>
+          <span class="value">
+            {% if item.payment_Status == "Paid" %}
+            <span class="status-paid">Paid</span>
+            {% elif item.payment_Status == "Failed" %}
+            <span class="status-failed">Failed</span>
+            {% else %}
+            <span class="status-pending">Pending</span>
+            {% endif %}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Delivery Status :</span>
+          <span class="value">
+            {% if item.delivery_status == "Delivered" %}
+            <span class="status-paid">Delivered</span>
+            {% elif item.delivery_status == "Failed" %}
+            <span class="status-failed">Failed</span>
+            {% else %}
+            <span class="status-pending">Get You Soon</span>
+            {% endif %}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="label">Delivery Date :</span>
+          <span class="value">
+            {% if item.delivery_date %}
+            {{ item.delivery_date.strftime('%Y-%m-%d') }}
+            {% else %}
+            Not Delivered Yet
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <p class="empty">Your order is empty 😢</p>
+  {% endif %}
+</div>
+
+{% endblock %}

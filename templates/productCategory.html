@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}{{ category }} - Crazekart{% endblock %}
+{% block content %}
+
+<style>
+  .add-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .add-card-btn {
+    background: transparent;
+    border: none;
+    font-size: 50px;
+    color: #bbb;
+    cursor: pointer;
+  }
+
+  .add-card-btn:hover {
+    color: #ff4d4d;
+  }
+</style>
+
+<section class="categories">
+  <div class="category-filter">
+    <h2>Brand</h2>
+    {% if brands %}
+    {% for brand in brands %}
+    <label class="brand-item">
+      <input type="checkbox" class="brand-checkbox" value="{{ brand }}" />
+      <span>{{ brand }}</span>
+    </label>
+    {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+<section class="products-container">
+  <div class="product-wrapper">
+    {% if products %}
+    {% for product in products %}
+    <div class="products-card" data-brand="{{ product.brand }}">
+      {% if current_user.is_authenticated and current_user.is_admin %}
+      <a href="{{ url_for('delete_product', id=product.id) }}">
+        <button class="remove-btn">−</button>
+      </a>
+      <a href="{{ url_for('edit_product_info', id=product.id) }}">
+        <button class="add-btn">+</button>
+      </a>
+      {% endif %}
+
+      <img
+        src="{{ url_for('static', filename='assets/products/' + product.image + '.webp') }}"
+        alt="{{ product.name }}"
+      />
+
+      <div class="product-info">
+        <p class="product-title">{{ product.name }}</p>
+
+        <p class="rating">
+          {{ product.rating }}
+          <span class="stars">
+            {% for i in range(product.rating|int) %}
+            <i class="fa fa-star"></i>
+            {% endfor %}
+            {% if product.rating - (product.rating|int) >= 0.5 %}
+            <i class="fa fa-star-half"></i>
+            {% endif %}
+            {% set remaining = 5 - (product.rating|int) - (1 if product.rating - (product.rating|int) >= 0.5 else 0) %}
+            {% for i in range(remaining) %}
+            <i class="fa fa-star-o"></i>
+            {% endfor %}
+          </span>
+        </p>
+
+        <div class="purchase-section">
+          <div>
+            <span class="price">₹{{ product.price }}</span>
+            <s class="light-text">₹{{ product.original_price }}</s>
+            <span class="offer-percentage">{{ product.discount }}% off</span>
+          </div>
+
+          <button
+            class="buy-button"
+            data-id="{{ product.id }}"
+            data-color="{{ product.color }}"
+            data-vcolor="{{ product.vcolor }}"
+            data-image="{{ product.image }}"
+          >
+            BUY
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if current_user.is_authenticated and current_user.is_admin %}
+    <div class="products-card add-card">
+      <button
+        class="add-card-btn"
+        onclick="window.location.href='{{ url_for('add_product_details') }}'"
+      >
+        +
+      </button>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

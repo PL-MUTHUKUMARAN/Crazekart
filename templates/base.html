@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Crazekart{% endblock %}</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+
+    <script>
+      const STATIC_URL = "{{ url_for('static', filename='') }}";
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <h2>Crazekart</h2>
+
+      <div class="search-box-container">
+        <input
+          type="text"
+          class="search-box"
+          id="searchInput"
+          placeholder="Search products..."
+        />
+        <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
+        <i class="fa-solid fa-xmark" id="search-close"></i>
+      </div>
+
+      <nav>
+        <ul>
+          <li>
+            <a href="/"><i class="fa-solid fa-house"></i></a>
+          </li>
+          <li class="categories-icon-container">
+            <a><i class="fa-solid fa-table-cells-large" id="categories-icon"></i></a>
+          </li>
+          <li>
+            <div class="profile-wrapper">
+              {% if current_user.is_authenticated %}
+
+              <a href="javascript:void(0);" class="profile-icon" id="profile-icon">
+                <i class="fa fa-user"></i>
+              </a>
+
+              <div class="dropdown-menu" id="dropdown-menu">
+                <a href="{{ url_for('profile') }}">Profile</a>
+                {% if current_user.is_authenticated and current_user.is_admin %}
+                <a href="{{ url_for('admin_orders') }}">Orders</a>
+                {% else %}
+                <a href="{{ url_for('user_orders') }}">Orders</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+              </div>
+
+              {% else %}
+
+              <a href="{{ url_for('login') }}" class="profile-icon">
+                <i class="fa fa-user"></i>
+              </a>
+
+              {% endif %}
+            </div>
+          </li>
+          <li>
+            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

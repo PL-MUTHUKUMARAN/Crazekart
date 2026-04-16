@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}Login – Crazekart{% endblock %}
+{% block content %}
+
+<style>
+  .login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f6fa;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 380px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .lc-top {
+    background: #eef0f6;
+    padding: 20px;
+  }
+
+  .lc-top h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .auth-tabs {
+    display: flex;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #888;
+    border-bottom: 2px solid transparent;
+  }
+
+  .tab-btn.active {
+    color: #ff4c3b;
+    border-bottom: 2px solid #ff4c3b;
+  }
+
+  .lc-body {
+    padding: 22px;
+  }
+
+  .auth-form {
+    display: none;
+  }
+
+  .auth-form.visible {
+    display: block;
+  }
+
+  .fg {
+    margin-bottom: 14px;
+  }
+
+  .fg input {
+    width: 100%;
+    padding: 11px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .auth-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #ff4c3b;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .auth-btn:hover {
+    background: #e84335;
+  }
+
+  .switch-text {
+    font-size: 13px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .switch-text a {
+    color: #ff4c3b;
+    text-decoration: none;
+  }
+
+  .flash-msg {
+    text-align: center;
+    color: red;
+    margin-bottom: 10px;
+  }
+</style>
+
+<div class="login-page">
+  <div class="login-card">
+    <div class="lc-top">
+      <h2>🛒 Crazekart</h2>
+
+      <div class="auth-tabs">
+        <button class="tab-btn active" onclick="switchTab('login-form', this)">
+          Login
+        </button>
+        <button class="tab-btn" onclick="switchTab('reg-form', this)">
+          Register
+        </button>
+      </div>
+    </div>
+
+    <div class="lc-body">
+      <!-- LOGIN -->
+      <form class="auth-form visible" id="login-form" method="POST" action="{{ url_for('login') }}">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-msg">{{ messages[0] }}</div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="fg">
+          <input type="email" name="email" placeholder="Email" required />
+        </div>
+
+        <div class="fg">
+          <input type="password" name="password" placeholder="Password" required />
+        </div>
+
+        <button type="submit" class="auth-btn">Login</button>
+      </form>
+
+      <!-- REGISTER -->
+      <form class="auth-form" id="reg-form" method="POST" action="{{ url_for('register') }}">
+        <div class="fg">
+          <input type="text" name="username" placeholder="Username" required />
+        </div>
+
+        <div class="fg">
+          <input type="email" name="email" placeholder="Email" required />
+        </div>
+
+        <div class="fg">
+          <input type="password" name="password" placeholder="Password" required />
+        </div>
+
+        <button type="submit" class="auth-btn">Create Account</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchTab(id, el = null) {
+    document.querySelectorAll(".auth-form").forEach((f) => f.classList.remove("visible"));
+    document.getElementById(id).classList.add("visible");
+    document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+    if (el) el.classList.add("active");
+  }
+</script>
+
+{% endblock %}

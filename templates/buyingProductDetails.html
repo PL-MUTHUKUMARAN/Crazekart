@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% block title %}Product Details - Crazekart{% endblock %}
+{% block content %}
+
+<style>
+  body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .products-container {
+    margin-top: 60px;
+  }
+
+  .buying-product-details-container,
+  .color-image {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .buying-product-main-image img {
+    border: 1px solid rgb(242, 241, 241);
+  }
+
+  .buying-product-images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .buying-product-images img,
+  .color-image img {
+    border: 1px solid rgb(242, 241, 241);
+    background-color: rgba(250, 250, 255, 0.2);
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+  }
+
+  .buying-product-main-image img {
+    height: 500px;
+    width: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .rat {
+    background-color: #029118a4;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  .reviews {
+    margin: 10px;
+    color: gray;
+  }
+
+  .buying-product-details {
+    padding: 20px;
+  }
+
+  .product-name {
+    font-size: 28px;
+    margin: 20px 0px;
+  }
+
+  .product-description {
+    margin: 20px 0px;
+    color: #4d4a4a;
+    font-size: 18px;
+    word-spacing: 2px;
+  }
+
+  .product-price {
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .original-price {
+    color: #4d4a4a;
+    font-size: 18px;
+  }
+
+  .discount-percentage {
+    color: green;
+    font-weight: 660;
+    margin-left: 20px;
+  }
+
+  .buying-product-main-image {
+    position: relative;
+  }
+
+  .buying-product-main-image button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: #fff;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 25px;
+  }
+
+  .product-color {
+    display: block;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .btns {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btns form {
+    flex: 1;
+  }
+
+  .btns button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 50px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    background-color: red;
+  }
+
+  .categories-icon-container {
+    display: none;
+  }
+
+  @media screen and (max-width: 720px) {
+    body {
+      padding: 0%;
+      width: 100%;
+      display: block;
+      margin: 0%;
+      overflow-x: hidden;
+    }
+
+    .buying-product-details-container {
+      flex-direction: column;
+      padding: 0%;
+    }
+
+    .buying-product-images {
+      display: none;
+    }
+
+    .buying-product-main-image {
+      width: 90%;
+      height: auto;
+      margin: 5%;
+    }
+
+    .buying-product-main-image img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .btns {
+      margin: 5%;
+      width: 90%;
+    }
+
+    .buying-product-main-image button {
+      padding: 10px;
+      font-size: 18px;
+    }
+  }
+</style>
+
+<div class="buying-product-details-container" style="margin-top: 60px">
+  <div class="buying-product-images">
+    <img src="" alt="Product Image" class="product-image" />
+    <img src="" alt="Product Image" class="product-image" />
+    <img src="" alt="Product Image" class="product-image" />
+    <img src="" alt="Product Image" class="product-image" />
+    <img src="" alt="Product Image" class="product-image" />
+  </div>
+
+  <div class="buying-product-main-image">
+    <img src="" alt="Product Image" class="main-product-image" />
+    <button class="prod-prev">&#10094;</button>
+    <button class="prod-next">&#10095;</button>
+    <div class="dots-container"></div>
+  </div>
+
+  <div class="buying-product-details">
+    <span class="rat" style="color: gold">
+      &#11088;
+      <span class="rating" style="color: white">{{ product.rating }}</span>
+    </span>
+    <span class="reviews">Reviews: {{ product.reviews }}+</span>
+
+    <h2 class="product-name">{{ product.name }}</h2>
+
+    <p class="product-description">{{ product.description }}</p>
+
+    <span class="product-price">₹{{ product.price }}</span>
+    <s class="original-price">₹{{ product.original_price }}</s>
+    <span class="discount-percentage">-{{ product.discount }}%</span>
+    <p style="font-size: smaller; padding: 6px;">MRP (Inclusive of all taxes)</p>
+
+    <div class="product-color">
+      <div style="display: flex; gap: 20px; margin: 20px 0;">
+        <h3>Choose your Color:</h3>
+        <p class="color" style="font-size: larger;"></p>
+      </div>
+      <div class="color-image">
+        <a><img src="" alt="" class="productColor1" /></a>
+        {% if product.colorVariety %}
+        <a><img src="" alt="" class="productColor2" /></a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="btns">
+      <form action="{{ url_for('addToCart', id=product.id) }}" method="POST">
+        <input type="hidden" name="image" id="cart-image">
+        <input type="hidden" name="color" id="cart-color">
+        <button type="submit">Add to Cart</button>
+      </form>
+
+      <form action="{{ url_for('buy_now', id=product.id) }}" method="POST">
+        <input type="hidden" name="image" id="buy-image">
+        <input type="hidden" name="color" id="buy-color">
+        <button type="submit">Buy Now</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

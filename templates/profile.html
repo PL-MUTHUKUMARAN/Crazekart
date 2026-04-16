@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+
+<style>
+  body {
+    background: #f9fafb;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  .categories-icon-container {
+    display: none;
+  }
+
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    padding: 20px;
+  }
+
+  .profile-card {
+    background: #ffffff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 420px;
+    padding: 28px;
+    color: #1f2937;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f1f1;
+    transition: 0.3s ease;
+  }
+
+  .profile-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .profile-header {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .profile-avatar {
+    width: 85px;
+    height: 85px;
+    margin: auto;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #ff4c3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: #ff4c3b;
+  }
+
+  .profile-header h2 {
+    margin: 6px 0;
+    font-weight: 600;
+  }
+
+  .profile-header p {
+    font-size: 14px;
+    color: #6b7280;
+  }
+
+  .profile-details {
+    margin-top: 15px;
+  }
+
+  .detail {
+    padding: 14px 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    background: #fafafa;
+    border: 1px solid #f2f2f2;
+    transition: 0.2s;
+  }
+
+  .detail:hover {
+    border-color: #ff4c3b;
+    background: #fff;
+  }
+
+  .detail span {
+    font-size: 11px;
+    color: #9ca3af;
+  }
+
+  .detail p {
+    margin: 3px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .profile-actions {
+    margin-top: 22px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    flex: 1;
+    text-align: center;
+    padding: 11px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.25s;
+  }
+
+  .btn:first-child {
+    background: #ff4c3b;
+    color: white;
+  }
+
+  .btn:first-child:hover {
+    background: #ff4c3b;
+  }
+
+  .logout {
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+  }
+
+  .logout:hover {
+    border-color: #ff7a00;
+    color: #ff7a00;
+  }
+
+  @media (max-width: 500px) {
+    .profile-actions {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <i class="fa fa-user"></i>
+      </div>
+      <h2>{{ current_user.username }}</h2>
+      <p>{{ current_user.email }}</p>
+    </div>
+
+    <div class="profile-details">
+      <div class="detail">
+        <span>Name</span>
+        <p>{{ current_user.username }}</p>
+      </div>
+
+      <div class="detail">
+        <span>Email</span>
+        <p>{{ current_user.email }}</p>
+      </div>
+
+      <div class="detail">
+        <span>Member Since</span>
+        <p>{{ current_user.created_at.strftime('%d - %B - %Y') }}</p>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <a href="{{ url_for('user_orders') }}" class="btn">Orders</a>
+      <a href="{{ url_for('logout') }}" class="btn logout">Logout</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
