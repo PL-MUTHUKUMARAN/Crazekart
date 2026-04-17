@@ -1,6 +1,5 @@
-{% extends "base.html" %}
-{% block title %}Home - Crazekart{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Home - Crazekart{% endblock %} {%
+block content %}
 
 <style>
   .products-container {
@@ -14,16 +13,28 @@
 <section class="banners-container">
   <div class="banners-wrapper">
     <div class="banner">
-      <img src="{{ url_for('static', filename='assets/banner/img1.jpg') }}" alt="banner 1" />
+      <img
+        src="{{ url_for('static', filename='assets/banner/img1.jpg') }}"
+        alt="banner 1"
+      />
     </div>
     <div class="banner">
-      <img src="{{ url_for('static', filename='assets/banner/img2.jpg') }}" alt="banner 2" />
+      <img
+        src="{{ url_for('static', filename='assets/banner/img2.jpg') }}"
+        alt="banner 2"
+      />
     </div>
     <div class="banner" id="b4">
-      <img src="{{ url_for('static', filename='assets/banner/img3.jpg') }}" alt="banner 3" />
+      <img
+        src="{{ url_for('static', filename='assets/banner/img3.jpg') }}"
+        alt="banner 3"
+      />
     </div>
     <div class="banner">
-      <img src="{{ url_for('static', filename='assets/banner/img4.jpg') }}" alt="banner 4" />
+      <img
+        src="{{ url_for('static', filename='assets/banner/img4.jpg') }}"
+        alt="banner 4"
+      />
     </div>
   </div>
 
@@ -36,8 +47,7 @@
 <section class="products-container">
   <h2>Best Products</h2>
   <div class="product-wrapper">
-    {% if products %}
-    {% for product in products %}
+    {% if products %} {% for product in products %}
     <div class="products-card">
       {% if current_user.is_authenticated and current_user.is_admin %}
       <a href="{{ url_for('remove_best_product', id=product.id) }}">
@@ -58,12 +68,11 @@
           <span class="stars">
             {% for i in range(product.rating|int) %}
             <i class="fa fa-star"></i>
-            {% endfor %}
-            {% if product.rating - (product.rating|int) >= 0.5 %}
+            {% endfor %} {% if product.rating - (product.rating|int) >= 0.5 %}
             <i class="fa fa-star-half"></i>
-            {% endif %}
-            {% set remaining = 5 - (product.rating|int) - (1 if product.rating - (product.rating|int) >= 0.5 else 0) %}
-            {% for i in range(remaining) %}
+            {% endif %} {% set remaining = 5 - (product.rating|int) - (1 if
+            product.rating - (product.rating|int) >= 0.5 else 0) %} {% for i in
+            range(remaining) %}
             <i class="fa fa-star-o"></i>
             {% endfor %}
           </span>
@@ -88,8 +97,7 @@
         </div>
       </div>
     </div>
-    {% endfor %}
-    {% endif %}
+    {% endfor %} {% endif %}
   </div>
 </section>
 
@@ -112,7 +120,10 @@
         </button>
       </div>
       <div class="categories-card-image">
-        <img src="{{ url_for('static', filename='assets/products/mobile/Samsung1.webp') }}" alt="mobile" />
+        <img
+          src="{{ url_for('static', filename='assets/products/mobile/samsung.webp') }}"
+          alt="mobile"
+        />
       </div>
     </div>
 
@@ -131,7 +142,10 @@
         </button>
       </div>
       <div class="categories-card-image">
-        <img src="{{ url_for('static', filename='assets/products/watches/watches-category-image.png') }}" alt="watches" />
+        <img
+          src="{{ url_for('static', filename='assets/products/watches/watches-category-image.png') }}"
+          alt="watches"
+        />
       </div>
     </div>
 
@@ -173,7 +187,10 @@
         </button>
       </div>
       <div class="categories-card-image">
-        <img src="{{ url_for('static', filename='assets/products/airpodes/boAt Airdopes115.webp') }}" alt="airpods" />
+        <img
+          src="{{ url_for('static', filename='assets/products/airpodes/boAt Airdopes115.webp') }}"
+          alt="airpods"
+        />
       </div>
     </div>
 
@@ -192,7 +209,10 @@
         </button>
       </div>
       <div class="categories-card-image">
-        <img src="{{ url_for('static', filename='assets/products/speakers/boAt Stone 1450 1.webp') }}" alt="speaker" />
+        <img
+          src="{{ url_for('static', filename='assets/products/speakers/boAt Stone 1450 1.webp') }}"
+          alt="speaker"
+        />
       </div>
     </div>
 
@@ -211,7 +231,10 @@
         </button>
       </div>
       <div class="categories-card-image">
-        <img src="{{ url_for('static', filename='assets/products/TV/tv.png') }}" alt="tv" />
+        <img
+          src="{{ url_for('static', filename='assets/products/TV/tv.png') }}"
+          alt="tv"
+        />
       </div>
     </div>
   </div>
