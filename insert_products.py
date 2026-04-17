@@ -278,7 +278,7 @@ with app.app_context():
             "discount": 51,
             "brand": "boAt",
             "category": "speakers",
-            "image": "speakers/boAt Stone 1450 ",
+            "image": "speakers/boAt Stone 1450",
             "color": "Blue",
             "vcolor": "Black",
             "rating": 4.2,
