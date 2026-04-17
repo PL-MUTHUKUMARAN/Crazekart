@@ -1,6 +1,5 @@
-{% extends "base.html" %}
-{% block title %}{{ category }} - Crazekart{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}{{ category }} - Crazekart{% endblock
+%} {% block content %}
 
 <style>
   .add-card {
@@ -20,26 +19,26 @@
   .add-card-btn:hover {
     color: #ff4d4d;
   }
+  .categories {
+    z-index: 1000;
+  }
 </style>
 
 <section class="categories">
   <div class="category-filter">
     <h2>Brand</h2>
-    {% if brands %}
-    {% for brand in brands %}
+    {% if brands %} {% for brand in brands %}
     <label class="brand-item">
       <input type="checkbox" class="brand-checkbox" value="{{ brand }}" />
       <span>{{ brand }}</span>
     </label>
-    {% endfor %}
-    {% endif %}
+    {% endfor %} {% endif %}
   </div>
 </section>
 
 <section class="products-container">
   <div class="product-wrapper">
-    {% if products %}
-    {% for product in products %}
+    {% if products %} {% for product in products %}
     <div class="products-card" data-brand="{{ product.brand }}">
       {% if current_user.is_authenticated and current_user.is_admin %}
       <a href="{{ url_for('delete_product', id=product.id) }}">
@@ -63,12 +62,11 @@
           <span class="stars">
             {% for i in range(product.rating|int) %}
             <i class="fa fa-star"></i>
-            {% endfor %}
-            {% if product.rating - (product.rating|int) >= 0.5 %}
+            {% endfor %} {% if product.rating - (product.rating|int) >= 0.5 %}
             <i class="fa fa-star-half"></i>
-            {% endif %}
-            {% set remaining = 5 - (product.rating|int) - (1 if product.rating - (product.rating|int) >= 0.5 else 0) %}
-            {% for i in range(remaining) %}
+            {% endif %} {% set remaining = 5 - (product.rating|int) - (1 if
+            product.rating - (product.rating|int) >= 0.5 else 0) %} {% for i in
+            range(remaining) %}
             <i class="fa fa-star-o"></i>
             {% endfor %}
           </span>
@@ -93,10 +91,8 @@
         </div>
       </div>
     </div>
-    {% endfor %}
-    {% endif %}
-
-    {% if current_user.is_authenticated and current_user.is_admin %}
+    {% endfor %} {% endif %} {% if current_user.is_authenticated and
+    current_user.is_admin %}
     <div class="products-card add-card">
       <button
         class="add-card-btn"

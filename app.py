@@ -79,7 +79,6 @@ def register():
 
         password = generate_password_hash(request.form.get('password'))
 
-        is_admin = True if email == "admin03@gmail.com" else False
 
         new_user = User(username=username, email=email, password=password)
         db.session.add(new_user)
