@@ -1,6 +1,5 @@
-{% extends "base.html" %}
-{% block title %}My Orders{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}My Orders{% endblock %} {% block
+content %}
 
 <style>
   body {
@@ -180,13 +179,11 @@
         </div>
 
         <div class="info-row">
-          <span class="label">Delivery Date :</span>
+          <span class="label">Delivery Date:</span>
           <span class="value">
-            {% if item.delivery_date %}
-            {{ item.delivery_date.strftime('%Y-%m-%d') }}
-            {% else %}
-            Not Delivered Yet
-            {% endif %}
+            {% if item.delivery_date %} {{
+            item.delivery_date.strftime('%Y-%m-%d') }} {% else %} Not Delivered
+            Yet {% endif %}
           </span>
         </div>
       </div>

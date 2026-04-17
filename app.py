@@ -161,14 +161,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/make-admin-secret-123/<email>')
-def make_admin(email):
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return "User not found"
-    user.is_admin = True
-    db.session.commit()
-    return f"Done! {user.username} is now admin"
+
 
 
 @app.route('/profile')
