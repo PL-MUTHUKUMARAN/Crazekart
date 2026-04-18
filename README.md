@@ -3,7 +3,6 @@
 CrazeKart is a full-stack e-commerce web application built using **Flask (Python)**. It provides a complete online shopping experience including authentication, product management, cart system, and order processing.
 
 🔗 **Live Website:** https://crazekart.onrender.com/index
-💻 **GitHub Repository:** https://github.com/PL-MUTHUKUMARAN/Crazekart
 
 ---
 
