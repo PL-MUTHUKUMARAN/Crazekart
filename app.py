@@ -87,7 +87,7 @@ def register():
     username=username,
     email=email,
     password=password,
-    is_admin=(email == "admin123@gmail.com")
+    is_admin=(email == "admin@gmail.com")
 )
         db.session.add(new_user)
         db.session.commit()
