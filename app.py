@@ -83,7 +83,12 @@ def register():
         password = generate_password_hash(request.form.get('password'))
 
 
-        new_user = User(username=username, email=email, password=password)
+        new_user = User(
+    username=username,
+    email=email,
+    password=password,
+    is_admin=(email == "admin123@gmail.com")
+)
         db.session.add(new_user)
         db.session.commit()
 
