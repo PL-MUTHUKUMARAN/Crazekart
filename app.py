@@ -79,8 +79,7 @@ def register():
 
         password = generate_password_hash(request.form.get('password'))
 
-
-        new_user = User(username=username, email=email, password=password, is_admin=True if email == "admin3@gmail.com" else False)
+        
         new_user = User(username=username, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
