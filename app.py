@@ -30,8 +30,8 @@ migrate = Migrate(app, db)
 with app.app_context():
     db.create_all()
 
-    if Product.query.count() == 0:
-        from insert_products import *
+   # if Product.query.count() == 0:
+   #    from insert_products import *
 
 login_manager = LoginManager()
 login_manager.init_app(app)
