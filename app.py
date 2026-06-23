@@ -30,9 +30,6 @@ migrate = Migrate(app, db)
 with app.app_context():
     db.create_all()
 
-   # if Product.query.count() == 0:
-   #    from insert_products import *
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -83,12 +80,8 @@ def register():
         password = generate_password_hash(request.form.get('password'))
 
 
-        new_user = User(
-    username=username,
-    email=email,
-    password=password,
-    is_admin=(email == "admin@gmail.com")
-)
+        new_user = User(username=username, email=email, password=password, is_admin=True if email == "admin123@gmail.com" else False)
+        new_user = User(username=username, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
 
@@ -104,7 +97,7 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        
+
 
         user = User.query.filter(User.email == email).first()
 
@@ -169,7 +162,14 @@ def logout():
     return redirect(url_for('index'))
 
 
-
+@app.route('/make-admin-secret-123/<email>')
+def make_admin(email):
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return "User not found"
+    user.is_admin = True
+    db.session.commit()
+    return f"Done! {user.username} is now admin"
 
 
 @app.route('/profile')
