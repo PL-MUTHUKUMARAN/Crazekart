@@ -161,7 +161,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/make-admin-secret-123/<email>')
+@app.route('/make-admin/<email>')
 def make_admin(email):
     user = User.query.filter_by(email=email).first()
     if not user:
